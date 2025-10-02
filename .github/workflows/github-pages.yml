@@ -41,7 +41,7 @@ jobs:
           URL: https://${{ github.event.repository.owner.name }}.github.io/${{ github.event.repository.name }}
 
       - name: Upload page artifacts
-        uses: actions/upload-pages-artifact@v3
+        uses: actions/upload-pages-artifact@v4
         with:
           path: public
 

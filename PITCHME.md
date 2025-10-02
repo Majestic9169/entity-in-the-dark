@@ -57,3 +57,19 @@ style: |
 ---
 
 ![bg fit](https://img.ifunny.co/images/c507464316caee4e0eeffdc7a5cef1f93ee4a09bd2d77cecae8de6dd1fa5e9f9_1.jpg)
+
+---
+
+# Authentication Codes
+
+An authentication code is a four-tuple $(\mathcal{S, A, K, E})$
+- $\mathcal{S}$ is a finite set of possible **source states**
+- $\mathcal{A}$ is a finite set of possible **authentication tags**
+- $\mathcal{K}$ is a finite set of possible **keys**
+- $\mathcal{E}$ is a finite set of possible **authentication rules**
+
+for each $K \in \mathcal{K}$ there is an authentication rule $E_K \in \mathcal{E}$ such that $E_K : \mathcal{S} \to \mathcal{A}$
+
+the message set if defined to be $\mathcal{M} = \mathcal{S} \times \mathcal{A}$
+
+a message $m = (s, a)$ is *valid* under key $K$ if $E_K(s) = a$
