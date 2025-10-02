@@ -1,77 +1,59 @@
 ---
 marp: true
 lang: en-US
-title: Marp CLI example
-description: Hosting Marp slide deck on the web
-theme: uncover
-transition: fade
+title: Identification Schemes and Entity Authentication
+description: Bala Dharnesh, Sai Pragnaan, Tegan Jain
+theme: default
 paginate: true
-_paginate: false
+style: |
+  section {
+    background: #181a20;
+    color: #eaeaea;
+    font-family: 'Fira Mono', 'JetBrains Mono', 'Consolas', 'Liberation Mono', 'Courier New', monospace;
+  }
+  h1, h2, h3 {
+    color: #46c646;
+    font-family: inherit;
+    border-bottom: 2px solid #3b3e43;
+  }
+  .terminal-accent {
+    color: #8be9fd;
+  }
+  .box {
+    background: #21222c;
+    color: #f8f8f2;
+    padding: 1.2em 1.8em;
+    border-radius: 8px;
+    border: 1.5px solid #44475a;
+    margin: 1em 0;
+  }
+  .mono-accent {
+    color: #fdbe31;
+    font-weight: bold;
+  }
+  table {
+    background: #262626;
+    color: #f8f8f2;
+    border: 1px solid #44475a;
+  }
 ---
 
-![bg opacity](./assets/gradient.jpg)
+<!-- _class: lead terminal-accent -->
+# Identification Schemes `&` Entity Authentication
 
-# <!--fit--> Marp CLI example
-
-Hosting Marp slide deck on the web
-
-https://github.com/yhatt/marp-cli-example
-
-<style scoped>a { color: #36c; }</style>
-
-<!-- This is presenter note. You can write down notes through HTML comment. -->
-
----
-
-![Marp bg 60%](https://raw.githubusercontent.com/marp-team/marp/master/marp.png)
-
----
-
-<!-- _backgroundColor: "#123" -->
-<!-- _color: "#fff" -->
-
-##### <!--fit--> [Marp CLI](https://github.com/marp-team/marp-cli) + [GitHub Pages](https://github.com/pages) | [Netlify](https://www.netlify.com/) | [Vercel](https://vercel.com/)
-
-##### <!--fit--> 👉 The easiest way to host<br />your Marp deck on the web
-
----
-
-![bg right 60%](https://icongr.am/octicons/mark-github.svg)
-
-## **[GitHub Pages](https://github.com/pages)**
-
-#### Ready to write & host your deck!
-
-[![Use this as template h:1.5em](https://img.shields.io/badge/-Use%20this%20as%20template-brightgreen?style=for-the-badge&logo=github)](https://github.com/yhatt/marp-cli-example/generate)
-
----
-
-![bg right 60%](https://icongr.am/simple/netlify.svg?colored)
-
-## **[Netlify](https://www.netlify.com/)**
-
-#### Ready to write & host your deck!
-
-[![Deploy to Netlify h:1.5em](./assets/netlify-deploy-button.svg)](https://app.netlify.com/start/deploy?repository=https://github.com/yhatt/marp-cli-example)
+- Bala Dharnesh  
+- Sai Pragnaan  
+- Tegan Jain
 
 ---
 
-![bg right 60%](https://icongr.am/simple/zeit.svg)
+# Table of Contents
 
-## **[Vercel](https://vercel.com/)**
-
-#### Ready to write & host your deck!
-
-[![Deploy to Vercel h:1.5em](https://vercel.com/button)](https://vercel.com/import/project?template=https://github.com/yhatt/marp-cli-example)
-
----
-
-### <!--fit--> :ok_hand:
+1. Identification Schemes
+1. Entity Authentication
+1. Deception Probabilities
+1. References
 
 ---
 
-![bg 40% opacity blur](https://avatars1.githubusercontent.com/u/3993388?v=4)
-
-### Created by Yuki Hattori ([@yhatt](https://github.com/yhatt))
-
-https://github.com/yhatt/marp-cli-example
+![bg fit](https://img.ifunny.co/images/c507464316caee4e0eeffdc7a5cef1f93ee4a09bd2d77cecae8de6dd1fa5e9f9_1.jpg)
