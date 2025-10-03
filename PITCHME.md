@@ -56,6 +56,16 @@ style: |
 
 ---
 
+# Identification Schemes
+
+- allow one party to prove their identity to another
+- Three possible approaches
+    - **Zero-Knowledge** Proofs: prove you know something without revealing what you know
+    - **Commitment Schemes**: Bind to a value while keeping it hidden
+    - **Sigma Protocols**: 3 move identification with minimal rounds
+
+---
+
 ![bg fit](https://img.ifunny.co/images/c507464316caee4e0eeffdc7a5cef1f93ee4a09bd2d77cecae8de6dd1fa5e9f9_1.jpg)
 
 ---
@@ -73,3 +83,13 @@ for each $K \in \mathcal{K}$ there is an authentication rule $E_K \in \mathcal{E
 the message set if defined to be $\mathcal{M} = \mathcal{S} \times \mathcal{A}$
 
 a message $m = (s, a)$ is *valid* under key $K$ if $E_K(s) = a$
+
+---
+
+# Referencces
+
+- [Cryptography Academy](https://cryptographyacademy.com/identification-schemes/)
+
+---
+
+# Thank You
