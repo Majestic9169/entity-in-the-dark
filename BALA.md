@@ -456,8 +456,6 @@ Alice ←─r₁─ Oscar ─r₂─→ Bob
 **Reality Check**: Crypto won't save you from people!
 *User training and UX design matter as much as algorithms*
 
----
-
 # Protocol Comparison Summary
 
 | **Protocol** | **Security** | **Flows** | **Key Vulnerability** | **Fix** |
