@@ -148,28 +148,111 @@ We begin by considering the *secret-key* setting where Alice and Bob both have t
 2. Alice computes $y = MAC_K(r)$ and sends $y$ to Bob
 3. Bob computes $y' = MAC_K(r)$ and if $y' = y$, Bob "accepts"
 
----
-
-# Authentication Codes
-
-An authentication code is a four-tuple $(\mathcal{S, A, K, E})$
-- $\mathcal{S}$ is a finite set of possible **source states**
-- $\mathcal{A}$ is a finite set of possible **authentication tags**
-- $\mathcal{K}$ is a finite set of possible **keys**
-- $\mathcal{E}$ is a finite set of possible **authentication rules**
-
-for each $K \in \mathcal{K}$ there is an authentication rule $E_K \in \mathcal{E}$ such that $E_K : \mathcal{S} \to \mathcal{A}$
-
-the message set if defined to be $\mathcal{M} = \mathcal{S} \times \mathcal{A}$
-
-a message $m = (s, a)$ is *valid* under key $K$ if $E_K(s) = a$
+**Flow Diagram:**
+```
+        Alice                                Bob
+1.                  <-------- r --------  
+2.      y = MAC(r)  --------─ y -------->
+3.                                          y = MAC(r)?
+```
 
 ---
+
+> What if you ask Bob to verify his identify against the same random challenge $r$?
+
+---
+
+### Attacking Protocol 1: Parallel Session Attacks
+
+###### Session 1
+```
+        Oscar                                Bob
+1.                  <-------- r --------  
+```
+
+
+###### Session 2
+```
+        Bob                                  Oscar
+1.                  <-------- r --------  
+2.      y = MAC(r)  --------─ y -------->    scheme broken
+```
+
+
+###### Session 1
+```
+        Oscar                                Bob
+2.      y           --------─ y -------->    accept
+```
+
+---
+
+### Attacking Protocol 1: Parallel Session Attacks
+
+```
+Session 1:   Oscar <---r--- Bob
+               ↓
+            +-----+
+            │  r  | (same challenge)
+            +-----+
+               ↓
+Session 2:   Oscar ----r---> Bob  
+                           |
+               +------y----+
+               ↓
+            +-----+
+            │  y  | (Bob's MAC)
+            +-----+
+               ↓
+Session 1:   Oscar ----r---> Bob (ACCEPT)
+```
+
+
+---
+
+> More than just a secure $MAC$ algorithm is required
+
+---
+
+## Protocol 2: (Secure) Identity-Bound Challenge and Response
+
+1. Bob chooses a random *challenge* $r$, which he sends to Alice
+2. Alice computes $y = MAC_K(ID(Alice) || r)$ and sends $y$ to Bob
+3. Bob computes $y' = MAC_K(ID(Alice) || r)$ and if $y' = y$, Bob "accepts"
+
+**Flow Diagram:**
+```
+    Alice                                            Bob
+1.                          <-------- r --------  
+2.  y = MAC(id(alice)||r)   --------─ y -------->
+3.                                                  y = MAC(id(alice)||r)?
+```
+
+---
+
+> No longer weak to parallel session attacks! But is it secure against other attacks?
+
+---
+
+### Proving Security of Protocol 2
+
+##### Assumptions:
+1. **secret key**: $K$ is known only to Alice and Bob
+1. **random challenges**: $r$'s are perfectly random
+1. **MAC security**: Assume the MAC is secure, i.e.
+
+there does NOT exist a $(\varepsilon, Q)$ forger for the MAC, where
+- $\varepsilon$ is the maximum probability that Oscar can compute $MAC_K(x)$
+- even when given $Q$ **known message** codes $(x_i, MAC_K(x_i))$ for $i \le Q$
+
+---
+
 
 # Referencces
 
 - [Cryptography Academy](https://cryptographyacademy.com/identification-schemes/)
 - [Challenge-Response Authentication](https://en.wikipedia.org/wiki/Challenge%E2%80%93response_authentication)
+- [Parallel Session Attacks](https://link.springer.com/content/pdf/10.1007/978-3-540-85257-5_24.pdf?pdf=inline+link)
 - [Authentication in SSH](https://web.archive.org/web/20041014002830/http://www.cag.lcs.mit.edu/~rugina/ssh-procedures/)
 
 ---
