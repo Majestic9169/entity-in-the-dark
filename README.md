@@ -305,7 +305,7 @@ When opening a new channel of communication, both Alice and Bob must authenticat
 
 ---
 
-## Protocol 3: (Insecure) Mutual Challenge-And-Response
+### Protocol 3: (Insecure) Mutual Challenge-And-Response
 
 1. Bob chooses a random challenge, $r_1$, which he sends to Alice.  
 2. Alice chooses a random challenge, $r_2$.  
@@ -329,7 +329,7 @@ When opening a new channel of communication, both Alice and Bob must authenticat
 
 ---
 
-### Attacking Protocol 3: Reflection Attacks
+#### Attacking Protocol 3: Reflection Attacks
 
 Oscar can impersonate Bob to Alice by using Bob himself as an oracle to compute the required response.
 
