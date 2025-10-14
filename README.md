@@ -238,7 +238,7 @@ Session 1:   Oscar ----r---> Bob (ACCEPT)
 
 ##### Assumptions:
 1. **secret key**: $K$ is known only to Alice and Bob
-1. **random challenges**: $r$'s are perfectly random
+1. **random challenges**: $r$'s are perfectly random and of $k$ bits
 1. **MAC security**: Assume the MAC is secure, i.e.
 
 there does NOT exist a $(\varepsilon, Q)$ forger for the MAC, where
@@ -249,7 +249,36 @@ there does NOT exist a $(\varepsilon, Q)$ forger for the MAC, where
 
 ##### Proof Idea:
 
+There are only 3 cases where $y$ was computed before being used in this session
+- by Alice in a previous session. But $r$ is random and this would mean it was reused
+- by Oscar without knowing what $K$ is, this will have a very small probability of being correct
+- by Bob in a previous session: but Bob will only compute $MAC_K(ID(Bob)||r)$ so he can't have computed $y$, so we will ignore this case
 
+---
+
+##### Proof:
+
+1. $y$ previously computed by Alice
+- $r$ was reused from one of the previous $Q$ sessions, the probability of this happening is 
+$$
+\Pr[r_{curr} = r_{prev}] = \frac{Q}{2^k}
+$$
+
+---
+
+##### Proof:
+2. $y$ has been forged by Oscar
+- the MAC is $(\varepsilon, Q)$ secure
+- thus the probability of a successful forgery is 
+$$
+\Pr[forgery] = \varepsilon
+$$
+
+---
+
+Thus we can conclude
+
+> if $MAC$ is an $(\varepsilon, Q)$ secure message authentication code, and suppose random challenges are $k$ bits in length. Then Protocol 2 is a $(\varepsilon + \frac{Q}{2^k}, Q)$ secure identification scheme
 
 ---
 
