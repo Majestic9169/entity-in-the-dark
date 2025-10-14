@@ -93,7 +93,7 @@ You could do it in one of three ways. You look at
 
 ---
 
-![bg blur:150px](./assets/caitvi.jpg)
+![bg blur:50px](./assets/caitvi.jpg)
 
 ## Recognition IS NOT Authentication
 
@@ -282,33 +282,62 @@ Thus we can conclude
 
 ---
 
+### Attacking Protocol 2: Intruder-in-the-middle
+
+```
+          Alice                                     Oscar                                  Bob
+1.                            <---------r-------             <-----------r----------       
+2. y = MAC(ID(alice)||r)      ----------y------->            ------------y---------->      
+3.                                                                                         accept
+```
+
+- However in this scenario Oscar is *passive* and we do not consider this interaction to be insecure.
+- If Oscar was considered to be *active*, he would
+  - carry out an *information-gathering* phase
+  - then try to exploit this information and deceive Alice/Bob
+- This attack model would still have the same security analysis
+
+---
+
+![bg right:35%](./assets/secure_app.png)
+
+# Mutual Authentication
+
+When opening a new channel of communication, both Alice and Bob must authenticate themselves to each other.
+
+---
+
 ## Protocol 3: (Insecure) Mutual Challenge-And-Response
 
-1. Bob chooses a random challenge, $r1$, which he sends to Alice.  
-2. Alice chooses a random challenge, $r2$.  
-   Alice computes $y1 = MAC_K(ID(Alice) ‖ r1)$ and sends $(y1, r2)$ to Bob.  
-3. Bob computes $y'1 = MAC_K(ID(Alice) ‖ r1)$. If $y'1 = y1$, Bob *accepts*; otherwise *rejects*.  
-   Bob computes $y2 = MAC_K(ID(Bob) ‖ r2)$ and sends $y2$ to Alice.  
-4. Alice computes $y'2 = MAC_K(ID(Bob) ‖ r2)$. If $y'2 = y2$, Alice *accepts*; otherwise *rejects*.
+1. Bob chooses a random challenge, $r_1$, which he sends to Alice.  
+2. Alice chooses a random challenge, $r_2$.  
+   Alice computes $y_1 = MAC_K(ID(Alice) ‖ r_1)$ and sends $(y_1, r_2)$ to Bob.  
+3. Bob computes $y'_1 = MAC_K(ID(Alice) ‖ r_1)$. If $y'_1 = y_1$, Bob *accepts*; otherwise *rejects*.  
+   Bob computes $y_2 = MAC_K(ID(Bob) ‖ r_2)$ and sends $y_2$ to Alice.  
+4. Alice computes $y'_2 = MAC_K(ID(Bob) ‖ r_2)$. If $y'_2 = y_2$, Alice *accepts*; otherwise *rejects*.
 ---
 **Flow Diagram:**
 ```
-      Alice                                       Bob
-1.                  <----------- r1 -----------
-2. y1=MAC(id(A)||r1) --- r2, y1 --------------->
-3.                                              y1 valid? (accepts Alice)
-3.                  <----------- y2 -----------  y2=MAC(id(B)||r2)
-4. y2 valid? (accepts Bob)
+      Alice                                                Bob
+1.                          <----------- r1 -----------
+2. y1=MAC(id(A)||r1)        ---------- r2, y1 -------->
+3.                                                         y1 valid? (accepts Alice)
+4.                          <----------- y2 -----------    y2=MAC(id(B)||r2)
+5. y2 valid? (accepts Bob)  
 ```
 ---
+
 > What if Oscar impersonates as Alice to Bob and as Bob to Alice?
+
 ---
+
 ### Attacking Protocol 3: Reflection Attacks
-This protocol is vulnerable to a reflection attack where an attacker, Oscar, can impersonate Bob to Alice by using Bob himself as an oracle to compute the required response.
+
+Oscar can impersonate Bob to Alice by using Bob himself as an oracle to compute the required response.
 
 ###### Session 1 (Oscar (as Bob) initiates with Alice)
 ```
-Alice <--- r1 --- Oscar(Bob)
+Alice <---- r1 ------ Oscar(Bob)
 Alice --- r2, y1 ---> Oscar(Bob)
 ```
 
@@ -322,29 +351,33 @@ Oscar(Alice) <--- y2 --- Bob (Bob computes the response)
 ```
 Alice <--- y2 --- Oscar(Bob) (ACCEPT)
 ```
+
 ---
+
 ## Protocol 4: (Secure) Mutual Challenge-And-Response
 
-1. Bob chooses a random challenge **r1**, which he sends to Alice.  
-2. Alice chooses a random challenge **r2**.  
-   Alice computes **y1 = MAC_K(ID(Alice) ‖ r1 ‖ r2)** and sends **(y1, r2)** to Bob.  
-3. Bob computes **y′1 = MAC_K(ID(Alice) ‖ r1 ‖ r2)**.  
-   If **y′1 = y1**, Bob *accepts*; otherwise *rejects*.  
-   Bob computes **y2 = MAC_K(ID(Bob) ‖ r2)** and sends **y2** to Alice.  
-4. Alice computes **y′2 = MAC_K(ID(Bob) ‖ r2)**.  
-   If **y′2 = y2**, Alice *accepts*; otherwise *rejects*.
+1. Bob chooses a random challenge $r_1$, which he sends to Alice.  
+2. Alice chooses a random challenge $r_2$.  
+   Alice computes $y_1 = MAC_K(ID(Alice) ‖ r_1 ‖ r_2)$ and sends $(y_1, r_2)$ to Bob.  
+3. Bob computes $y′_1 = MAC_K(ID(Alice) ‖ r_1 ‖ r_2)$.  
+   If $y′_1 = y_1$, Bob *accepts*; otherwise *rejects*.  
+   Bob computes $y_2 = MAC_K(ID(Bob) ‖ r_2)$ and sends $y_2$ to Alice.  
+4. Alice computes $y′_2 = MAC_K(ID(Bob) ‖ r_2)$.  
+   If $y′_2 = y_2$, Alice *accepts*; otherwise *rejects*.
 ---
 
 **Flow diagram:**
 ```
-      Alice                                           Bob
-1.                      <----------- r1 -----------
-2. y1=MAC(id(A)||r1||r2) --- r2, y1 --------------->
-3.                                                   y1 valid? (accepts Alice)
-3.                      <----------- y2 -----------  y2=MAC(id(B)||r2)
-4. y2 valid? (accepts Bob)
+      Alice                                                 Bob
+1.                            <----------- r1 -----------
+2. y1=MAC(id(A)||r1||r2)       ---------- r2, y1 ------->
+3.                                                         y1 valid? (accepts Alice)
+4.                            <----------- y2 -----------  y2=MAC(id(B)||r2)
+5. y2 valid? (accepts Bob)
 ```
+
 ---
+
 ### Proving Security of Protocol 4
 
 ##### Assumptions:
