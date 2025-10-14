@@ -282,7 +282,48 @@ Thus we can conclude
 
 ---
 
+## Protocol 3: (Insecure) Mutual Challenge-And-Response
 
+1. Bob chooses a random challenge, $r1$, which he sends to Alice.  
+2. Alice chooses a random challenge, $r2$.  
+   Alice computes $y1 = MAC_K(ID(Alice) ‖ r1)$ and sends $(y1, r2)$ to Bob.  
+3. Bob computes $y'1 = MAC_K(ID(Alice) ‖ r1)$. If $y'1 = y1$, Bob *accepts*; otherwise *rejects*.  
+   Bob computes $y2 = MAC_K(ID(Bob) ‖ r2)$ and sends $y2$ to Alice.  
+4. Alice computes $y'2 = MAC_K(ID(Bob) ‖ r2)$. If $y'2 = y2$, Alice *accepts*; otherwise *rejects*.
+---
+**Flow Diagram:**
+```
+      Alice                                       Bob
+1.                  <----------- r1 -----------
+2. y1=MAC(id(A)||r1) --- r2, y1 --------------->
+3.                                              y1 valid? (accepts Alice)
+3.                  <----------- y2 -----------  y2=MAC(id(B)||r2)
+4. y2 valid? (accepts Bob)
+```
+---
+> What if Oscar impersonates as Alice to Bob and as Bob to Alice?
+---
+### Attacking Protocol 3: Reflection Attacks
+This protocol is vulnerable to a reflection attack where an attacker, Oscar, can impersonate Bob to Alice by using Bob himself as an oracle to compute the required response.
+
+###### Session 1 (Oscar (as Bob) initiates with Alice)
+```
+Alice <--- r1 --- Oscar(Bob)
+Alice --- r2, y1 ---> Oscar(Bob)
+```
+
+###### Session 2 (Oscar (as Alice) reflects the challenge to Bob)
+```
+Oscar(Alice) --- r2 ---> Bob (as his own challenge)
+Oscar(Alice) <--- y2 --- Bob (Bob computes the response)
+```
+
+###### Session 1 (Oscar completes the impersonation)
+```
+Alice <--- y2 --- Oscar(Bob) (ACCEPT)
+```
+
+---
 # Referencces
 
 - [Cryptography Academy](https://cryptographyacademy.com/identification-schemes/)
