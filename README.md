@@ -66,8 +66,6 @@ style: |
     - How do you Identify?
 1. Private Key Identification
 1. Mutual Authentication
-1. Public Key Identification
-1. Attack Models and Examples
 1. References
 
 ---
