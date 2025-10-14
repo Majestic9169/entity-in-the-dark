@@ -322,8 +322,52 @@ Oscar(Alice) <--- y2 --- Bob (Bob computes the response)
 ```
 Alice <--- y2 --- Oscar(Bob) (ACCEPT)
 ```
+---
+## Protocol 4: (Secure) Mutual Challenge-And-Response
+
+1. Bob chooses a random challenge **r1**, which he sends to Alice.  
+2. Alice chooses a random challenge **r2**.  
+   Alice computes **y1 = MAC_K(ID(Alice) ‖ r1 ‖ r2)** and sends **(y1, r2)** to Bob.  
+3. Bob computes **y′1 = MAC_K(ID(Alice) ‖ r1 ‖ r2)**.  
+   If **y′1 = y1**, Bob *accepts*; otherwise *rejects*.  
+   Bob computes **y2 = MAC_K(ID(Bob) ‖ r2)** and sends **y2** to Alice.  
+4. Alice computes **y′2 = MAC_K(ID(Bob) ‖ r2)**.  
+   If **y′2 = y2**, Alice *accepts*; otherwise *rejects*.
+---
+
+**Flow diagram:**
+```
+      Alice                                           Bob
+1.                      <----------- r1 -----------
+2. y1=MAC(id(A)||r1||r2) --- r2, y1 --------------->
+3.                                                   y1 valid? (accepts Alice)
+3.                      <----------- y2 -----------  y2=MAC(id(B)||r2)
+4. y2 valid? (accepts Bob)
+```
+---
+### Proving Security of Protocol 4
+
+##### Assumptions:
+1. **secret key**: $K$ is known only to Alice and Bob
+1. **random challenges**: $r$'s are perfectly random and of $k$ bits
+1. **MAC security**: Assume the MAC is secure, i.e.
+
+there does NOT exist a $(\varepsilon, Q)$ forger for the MAC, where
+- $\varepsilon$ is the maximum probability that Oscar can compute $MAC_K(x)$
+- even when given $Q$ **known message** codes $(x_i, MAC_K(x_i))$ for $i \le Q$
 
 ---
+##### Proof Idea:
+
+There are only 3 cases where a valid tag (y₁ or y₂) could have been computed before being used in the current session:
+- By Alice or Bob in a previous session:
+  - This would require the same pair of random challenges (r₁, r₂) to be reused.Since both challenges are fresh and uniformly random, the probability of this happening is extremely small.
+- By Oscar without knowing what $K$ is, this will have a very small probability of being correct
+- By the honest partner in this session:
+This is expected behaviour, Alice and Bob compute and verify their own tags, so this case is ignored.
+
+---
+
 # Referencces
 
 - [Cryptography Academy](https://cryptographyacademy.com/identification-schemes/)
