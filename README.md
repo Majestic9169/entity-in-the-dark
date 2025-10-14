@@ -399,6 +399,10 @@ This is expected behaviour, Alice and Bob compute and verify their own tags, so 
 
 ---
 
+> Given a $(\varepsilon, Q)$ secure MAC algorithm, protocol 4 is a $(\frac{Q}{2^k} + 2\varepsilon, \frac{Q}{2})$ secure mutual identification scheme
+
+---
+
 # Referencces
 
 - [Cryptography Academy](https://cryptographyacademy.com/identification-schemes/)
