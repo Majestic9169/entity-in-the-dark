@@ -2,7 +2,7 @@
 marp: true
 lang: en-US
 title: Identification Schemes and Entity Authentication
-description: Bala Dharnesh, Sai Pragnaan, Tegan Jain
+description: BD, SP, TJ
 theme: default
 paginate: true
 style: |
@@ -53,9 +53,9 @@ style: |
 <!-- _class: lead terminal-accent -->
 # Identification Schemes `&` Entity Authentication
 
-- Bala Dharnesh  
-- Sai Pragnaan  
-- Tegan Jain
+- BD
+- SP
+- TJ
 
 ---
 
